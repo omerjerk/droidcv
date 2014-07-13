@@ -135,7 +135,7 @@ JNIEXPORT void JNICALL Java_org_opencv_samples_facedetect_DetectionBasedTracker_
 JNIEXPORT void JNICALL Java_org_opencv_samples_facedetect_DetectionBasedTracker_nativeSetFaceSize
 (JNIEnv * jenv, jclass, jlong thiz, jint faceSize)
 {
-    //LOGD("Java_org_opencv_samples_facedetect_DetectionBasedTracker_nativeSetFaceSize enter");
+    //LOGD("Java_in_umairkhanplus_android_DetectionBasedTracker_nativeSetFaceSize enter");
     try
     {
         if (faceSize > 0)
@@ -160,14 +160,14 @@ JNIEXPORT void JNICALL Java_org_opencv_samples_facedetect_DetectionBasedTracker_
         jclass je = jenv->FindClass("java/lang/Exception");
         jenv->ThrowNew(je, "Unknown exception in JNI code of DetectionBasedTracker.nativeSetFaceSize()");
     }
-    //LOGD("Java_org_opencv_samples_facedetect_DetectionBasedTracker_nativeSetFaceSize exit");
+    //LOGD("Java_in_umairkhanplus_android_DetectionBasedTracker_nativeSetFaceSize exit");
 }
 
 
-JNIEXPORT void JNICALL Java_org_opencv_samples_facedetect_DetectionBasedTracker_nativeDetect
+JNIEXPORT void JNICALL Java_in_umairkhanplus_android_DetectionBasedTracker_nativeDetect
 (JNIEnv * jenv, jclass, jlong thiz, jlong imageGray, jlong faces)
 {
-    //LOGD("Java_org_opencv_samples_facedetect_DetectionBasedTracker_nativeDetect enter");
+    //LOGD("Java_in_umairkhanplus_android_DetectionBasedTracker_nativeDetect enter");
     try
     {
         vector<Rect> RectFaces;
@@ -189,5 +189,5 @@ JNIEXPORT void JNICALL Java_org_opencv_samples_facedetect_DetectionBasedTracker_
         jclass je = jenv->FindClass("java/lang/Exception");
         jenv->ThrowNew(je, "Unknown exception in JNI code DetectionBasedTracker.nativeDetect()");
     }
-    //LOGD("Java_org_opencv_samples_facedetect_DetectionBasedTracker_nativeDetect exit");
+    //LOGD("Java_in_umairkhanplus_android_DetectionBasedTracker_nativeDetect exit");
 }
