@@ -9,6 +9,7 @@ import in.umairkhan.opencvplus.android.DisplayFrame;
 import in.umairkhan.opencvplus.android.DisplayFrameListener;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * Created by omerjerk on 12/7/14.
@@ -195,16 +196,12 @@ public class Utils {
                             if (VERBOSE) Log.d(TAG, "got empty frame");
                         } else {
                             if (VERBOSE) Log.d(TAG, "decoded, checking frame " + checkIndex);
-                            /*
-                            if (!checkFrame(checkIndex++, decoderOutputFormat, outputFrame)) {
-                                badFrames++;
-                            } */
-                            byte[] b = new byte[outputFrame.remaining()];
-                            Log.d("omerjerk", "size = " + b.length);
-                            outputFrame.get(b);
-                            displayFrame.updateFrame(b);
                             if (mListener != null) {
+                                byte[] b = new byte[info.size];
+                                outputFrame.get(b, info.offset, info.size);
+                                displayFrame.updateFrame(b);
                                 mListener.onNewFrame(displayFrame);
+                                mListener.rawFrame(b);
                             }
                         }
                         if ((info.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {

@@ -5,15 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import android.graphics.Bitmap;
+import android.graphics.*;
 import android.view.View;
 import android.widget.ImageView;
 import org.opencv.android.*;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfRect;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
+import org.opencv.android.Utils;
+import org.opencv.core.*;
 import org.opencv.objdetect.CascadeClassifier;
 
 import android.app.Activity;
@@ -49,10 +47,13 @@ public class FdActivity extends Activity implements DisplayFrameListener {
     private float                  mRelativeFaceSize   = 0.2f;
     private int                    mAbsoluteFaceSize   = 0;
 
-    ImageView test;
+    private static final boolean DEBUG = true;
 
-    //private CameraBridgeViewBase   mOpenCvCameraView;
+    ImageView test;
+    int k = 0;
     private AndroidDisplayView openCvDisplayView;
+    DisplayFrame derp = null;
+    byte[] rawFrame;
 
     private BaseLoaderCallback  mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -96,7 +97,6 @@ public class FdActivity extends Activity implements DisplayFrameListener {
                         Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
                     }
 
-                    //mOpenCvCameraView.enableView();
                     openCvDisplayView.startRendering();
                 } break;
                 default:
@@ -131,14 +131,6 @@ public class FdActivity extends Activity implements DisplayFrameListener {
         test = (ImageView) findViewById(R.id.image_view);
     }
 
-    public void derp(View v) {
-        test.setImageBitmap(null);
-        Bitmap bm = Bitmap.createBitmap(mRgba.cols(), mRgba.rows(), Bitmap.Config.ARGB_8888);
-
-        org.opencv.android.Utils.matToBitmap(mRgba, bm);
-        test.setImageBitmap(bm);
-    }
-
     @Override
     public void onPause()
     {
@@ -171,6 +163,41 @@ public class FdActivity extends Activity implements DisplayFrameListener {
         mRgba.release();
     }
 
+    @Override
+    public void rawFrame(final byte[] frame) {
+
+        if (!DEBUG) return;
+        runOnUiThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        k++;
+                        if (k % 25 != 0) return;
+                        test.setImageBitmap(null);
+                        Mat mat = new Mat(1280, 1024, CvType.CV_8UC3);
+                        mat.put(0, 0, frame);
+                        Bitmap bm = Bitmap.createBitmap(1024, 1280, Bitmap.Config.RGB_565);
+                        Utils.matToBitmap(mat, bm);
+                        test.setImageBitmap(bm);
+                        String filename = "/sdcard/derp2.jpg";
+                        FileOutputStream out = null;
+
+                        try {
+                            out = new FileOutputStream(filename);
+                            bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            try{
+                                out.close();
+                            } catch(Throwable ignore) {}
+                        }
+                    }
+                }
+        );
+    }
+
+    @Override
     public void onNewFrame(CvCameraViewFrame inputFrame) {
 
         mRgba = inputFrame.rgba();
@@ -204,23 +231,12 @@ public class FdActivity extends Activity implements DisplayFrameListener {
         else {
             Log.e(TAG, "Detection method is not selected!");
         }
-/*
-        Rect[] facesArray = faces.toArray();
+
+        /*Rect[] facesArray = faces.toArray();
         for (int i = 0; i < facesArray.length; i++)
             Core.rectangle(mRgba, facesArray[i].tl(), facesArray[i].br(), FACE_RECT_COLOR, 3);
 
         return mRgba;*/
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Log.i(TAG, "called onCreateOptionsMenu");
-        mItemFace50 = menu.add("Face size 50%");
-        mItemFace40 = menu.add("Face size 40%");
-        mItemFace30 = menu.add("Face size 30%");
-        mItemFace20 = menu.add("Face size 20%");
-        mItemType   = menu.add(mDetectorName[mDetectorType]);
-        return true;
     }
 
     @Override

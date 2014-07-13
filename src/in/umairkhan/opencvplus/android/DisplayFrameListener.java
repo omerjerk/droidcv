@@ -9,4 +9,5 @@ public interface DisplayFrameListener {
     public void onNewFrame(CameraBridgeViewBase.CvCameraViewFrame frame);
     public void onDisplayFrameStarted();
     public void onDisplayFrameStopped();
+    public void rawFrame(byte[] frame);
 }

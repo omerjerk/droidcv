@@ -146,35 +146,7 @@ public class AndroidDisplayView extends SurfaceView implements SurfaceHolder.Cal
 
         @Override
         public void run() {
-            /*
-            ByteBuffer[] outputBuffers = encoder.getOutputBuffers();
-            DisplayFrame displayFrame = new DisplayFrame(960, 1280);
-            mListener.onDisplayFrameStarted();
-            while(true) {
-                MediaCodec.BufferInfo info = new MediaCodec.BufferInfo();
-                int bufIndex = encoder.dequeueOutputBuffer(info, TimeUnit.SECONDS.toMicros(1) / 30);
-
-                if (bufIndex >= 0) {
-                    ByteBuffer frameBuffer = outputBuffers[bufIndex];
-                    //TODO: we've the buffer. Pass them to OpenCv.
-                    byte[] b = new byte[frameBuffer.remaining()];
-                    Log.d("omerjerk", "size = " + b.length);
-                    frameBuffer.get(b);
-                    displayFrame.updateFrame(b);
-                    if (mListener != null) {
-                        mListener.onNewFrame(displayFrame);
-                    }
-                    frameBuffer.clear();
-                    encoder.releaseOutputBuffer(bufIndex, false);
-                } else if (bufIndex == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
-                    outputBuffers = encoder.getOutputBuffers();
-                } else if (bufIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
-                    //TODO: stop
-                    //mListener.onDisplayFrameStopped();
-                    //break;
-                }
-            } */
-            DisplayFrame displayFrame = new DisplayFrame(960, 1280);
+            DisplayFrame displayFrame = new DisplayFrame(1024, 1280);
             decoder = MediaCodec.createDecoderByType(Utils.MIME_TYPE);
             Utils.doEncodeDecodeVideoFromSurface(encoder, decoder, mListener, displayFrame);
         }
