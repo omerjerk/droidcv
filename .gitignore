@@ -1,0 +1,6 @@
+out/*
+gen/*
+*.iml
+.idea/*
+.settings/*
+obj/*
