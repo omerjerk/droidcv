@@ -12,6 +12,7 @@ import org.opencv.android.*;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.Utils;
 import org.opencv.core.*;
+import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import android.app.Activity;
@@ -36,7 +37,7 @@ public class FdActivity extends Activity implements DisplayFrameListener {
     private MenuItem               mItemType;
 
     private Mat                    mRgba;
-    private Mat                    mGray;
+    //private Mat                    mGray;
     private File                   mCascadeFile;
     private CascadeClassifier      mJavaDetector;
     private DetectionBasedTracker  mNativeDetector;
@@ -48,6 +49,7 @@ public class FdActivity extends Activity implements DisplayFrameListener {
     private int                    mAbsoluteFaceSize   = 0;
 
     private static final boolean DEBUG = true;
+    public static final boolean DEBUG_IMAGE_OUT = false;
 
     ImageView test;
     int k = 0;
@@ -68,7 +70,7 @@ public class FdActivity extends Activity implements DisplayFrameListener {
 
                     try {
                         // load cascade file from application resources
-                        InputStream is = getResources().openRawResource(R.raw.cascade);
+                        InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
                         File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
                         mCascadeFile = new File(cascadeDir, "lbpcascade_frontalface.xml");
                         FileOutputStream os = new FileOutputStream(mCascadeFile);
@@ -124,8 +126,6 @@ public class FdActivity extends Activity implements DisplayFrameListener {
 
         setContentView(R.layout.face_detect_surface_view);
 
-        //mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.fd_activity_surface_view);
-        //mOpenCvCameraView.setCvCameraViewListener(this);
         openCvDisplayView = (AndroidDisplayView) findViewById(R.id.display_view);
         openCvDisplayView.setDisplayFrameListener(this);
         test = (ImageView) findViewById(R.id.image_view);
@@ -153,13 +153,13 @@ public class FdActivity extends Activity implements DisplayFrameListener {
 
     @Override
     public void onDisplayFrameStarted() {
-        mGray = new Mat();
+        //mGray = new Mat();
         mRgba = new Mat();
     }
 
     @Override
     public void onDisplayFrameStopped() {
-        mGray.release();
+        //mGray.release();
         mRgba.release();
     }
 
@@ -172,25 +172,43 @@ public class FdActivity extends Activity implements DisplayFrameListener {
                     @Override
                     public void run() {
                         k++;
-                        if (k % 25 != 0) return;
-                        test.setImageBitmap(null);
-                        Mat mat = new Mat(1280, 1024, CvType.CV_8UC3);
+                        if (k % 10 != 0) return;
+                        //test.setImageBitmap(null);
+                        //int[] rgb = new int[1024*1280];
+                        //in.umairkhan.opencvplus.android.Utils.decodeYUV420SP(frame, 1024, 1280, rgb);
+                        Mat mat = new Mat(1280, 1024, CvType.CV_8UC1);
                         mat.put(0, 0, frame);
-                        Bitmap bm = Bitmap.createBitmap(1024, 1280, Bitmap.Config.RGB_565);
+                        Log.d("opencv", "type = " + mat.type() + " channels = " + mat.channels());
+                        //Log.d("opencv", "MAT = " + mat.dump());
+                        MatOfRect faces = new MatOfRect();
+                        mNativeDetector.detect(mat, faces);
+                        Log.d("omerjerk", "Number of faces = " + faces.toArray().length);
+                        /*
+                        for (int i = 0; i < mat.rows(); ++i) {
+                            for (int j = 0; j < mat.cols(); ++j) {
+                                System.out.print(mat.);
+                            }
+                        }*/
+                        //Mat orig = new Mat(1280, 1024, CvType.CV_8UC3);
+                        //Imgproc.cvtColor(mat, orig, Imgproc.COLOR_YUV420sp2RGBA);
+                        Bitmap bm = Bitmap.createBitmap(1024, 1280, Bitmap.Config.ARGB_8888);
                         Utils.matToBitmap(mat, bm);
-                        test.setImageBitmap(bm);
-                        String filename = "/sdcard/derp2.jpg";
-                        FileOutputStream out = null;
+                        //test.setImageBitmap(bm);
 
-                        try {
-                            out = new FileOutputStream(filename);
-                            bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        } finally {
-                            try{
-                                out.close();
-                            } catch(Throwable ignore) {}
+                        if (k % 25 == 0) {
+                            String filename = "/sdcard/derp2.jpg";
+                            FileOutputStream out = null;
+
+                            try {
+                                out = new FileOutputStream(filename);
+                                bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            } finally {
+                                try{
+                                    out.close();
+                                } catch(Throwable ignore) {}
+                            }
                         }
                     }
                 }
@@ -201,28 +219,29 @@ public class FdActivity extends Activity implements DisplayFrameListener {
     public void onNewFrame(CvCameraViewFrame inputFrame) {
 
         mRgba = inputFrame.rgba();
-        mGray = inputFrame.gray();
+       // mGray = inputFrame.gray();
 
         if (mAbsoluteFaceSize == 0) {
-            int height = mGray.rows();
-            int width = mGray.cols();
-            Log.d("omerjerk", "width = " + width + " height = " + height);
+            //int height = mGray.rows();
+            //int width = mGray.cols();
+            //Log.d("omerjerk", "width = " + width + " height = " + height);
             if (true) {
-                mAbsoluteFaceSize = Math.round(height * 0.6f);
+              //  mAbsoluteFaceSize = Math.round(height * 0.6f);
             }
-            mNativeDetector.setMinFaceSize(mAbsoluteFaceSize);
+            //mNativeDetector.setMinFaceSize(mAbsoluteFaceSize);
         }
 
         MatOfRect faces = new MatOfRect();
 
         if (mDetectorType == JAVA_DETECTOR) {
-            if (mJavaDetector != null)
-                mJavaDetector.detectMultiScale(mGray, faces, 1.1, 2, 2, // TODO: objdetect.CV_HAAR_SCALE_IMAGE
-                        new Size(0, 0), new Size());
+            if (mJavaDetector != null){}
+               // mJavaDetector.detectMultiScale(mGray, faces, 1.1, 2, 2, // TODO: objdetect.CV_HAAR_SCALE_IMAGE
+                 //       new Size(0, 0), new Size());
         }
         else if (mDetectorType == NATIVE_DETECTOR) {
             if (mNativeDetector != null) {
-                mNativeDetector.detect(mGray, faces);
+                //mNativeDetector.detect(mRgba, faces);
+                //Log.d("omerjerk", "cols = " + mRgba.cols());
             } else {
                 Log.d(TAG, "Native Detector is NULL");
             }

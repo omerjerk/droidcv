@@ -16,7 +16,7 @@ public class DisplayFrame implements CameraBridgeViewBase.CvCameraViewFrame {
     public byte[] buffer;
 
     public DisplayFrame(int width, int height) {
-        frame = new Mat(height, width, CvType.CV_8UC3);
+        frame = new Mat(height, 1024, CvType.CV_8UC1);
         this.height = height;
         this.width = width;
     }

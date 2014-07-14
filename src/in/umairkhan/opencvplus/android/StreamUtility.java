@@ -44,8 +44,7 @@ public class StreamUtility {
 	    fastChannelCopy(inputChannel, outputChannel);
 	}
 
-    public static byte[] readToEndAsArray(InputStream input) throws IOException
-    {
+    public static byte[] readToEndAsArray(InputStream input) throws IOException {
         DataInputStream dis = new DataInputStream(input);
         byte[] stuff = new byte[1024];
         ByteArrayOutputStream buff = new ByteArrayOutputStream();

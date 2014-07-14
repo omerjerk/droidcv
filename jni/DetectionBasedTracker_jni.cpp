@@ -174,6 +174,9 @@ JNIEXPORT void JNICALL Java_in_umairkhan_opencvplus_android_DetectionBasedTracke
         ((DetectionBasedTracker*)thiz)->process(*((Mat*)imageGray));
         ((DetectionBasedTracker*)thiz)->getObjects(RectFaces);
         vector_Rect_to_Mat(RectFaces, *((Mat*)faces));
+        //FileStorage file("/sdcard/mat.yml", FileStorage::WRITE);
+        //Mat derp = (*((Mat*)faces));
+        //file << "img" << (*((Mat*)faces));
     }
     catch(cv::Exception& e)
     {
