@@ -1,6 +1,7 @@
 package in.umairkhan.opencvplus.android;
 
 import android.content.Intent;
+import android.view.View;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 
 import android.app.Activity;
@@ -9,16 +10,15 @@ import android.util.Log;
 import android.view.WindowManager;
 import org.opencv.core.Scalar;
 
-public class FdActivity extends Activity implements DisplayFrameListener {
+public class SampleActivity extends Activity {
 
-    private static final String    TAG                 = "OCVSample::Activity";
+    private static final String TAG = "SampleActivity";
     private static final Scalar FACE_RECT_COLOR     = new Scalar(0, 255, 0, 255);
 
     private static final boolean DEBUG = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "called onCreate");
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -36,22 +36,10 @@ public class FdActivity extends Activity implements DisplayFrameListener {
         super.onDestroy();
     }
 
-    @Override
-    public void onDisplayFrameStarted() {
-
+    public void stopService (View v) {
+        stopService(new Intent(this, CoreService.class));
     }
 
-    @Override
-    public void onDisplayFrameStopped() {
-    }
-
-    @Override
-    public void rawFrame(final byte[] frame) {
-
-        if (!DEBUG) return;
-    }
-
-    @Override
     public void onNewFrame(CvCameraViewFrame input){
 
         /*Rect[] facesArray = faces.toArray();
