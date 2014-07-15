@@ -21,6 +21,7 @@ public class ResultDisplayService extends Service {
     TextView detectionCountTextView = null;
     RelativeLayout resultOverlayLayout = null;
     ResultUpdatesReceiver resultUpdatesReceiver = new ResultUpdatesReceiver();
+    WindowManager windowManager;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -41,7 +42,7 @@ public class ResultDisplayService extends Service {
         resultOverlayLayout = (RelativeLayout) li.inflate(R.layout.result_layout, null, false);
         detectionCountTextView = (TextView) resultOverlayLayout.findViewById(R.id.result_text_view);
         detectionCountTextView.setText("FACES = 0");
-        WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -64,5 +65,6 @@ public class ResultDisplayService extends Service {
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(resultUpdatesReceiver);
+        windowManager.removeViewImmediate(resultOverlayLayout);
     }
 }

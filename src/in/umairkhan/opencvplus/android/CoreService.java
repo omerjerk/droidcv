@@ -99,7 +99,7 @@ public class CoreService extends Service implements DisplayFrameListener{
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback);
         // We want this service to continue running until it is explicitly
         // stopped, so return sticky.
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Override
@@ -136,5 +136,11 @@ public class CoreService extends Service implements DisplayFrameListener{
     @Override
     public void onDisplayFrameStopped() {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(this, ResultDisplayService.class));
     }
 }
