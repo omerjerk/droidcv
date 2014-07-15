@@ -6,11 +6,8 @@ import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
 import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import org.xml.sax.Attributes;
 import safesax.Element;
 import safesax.ElementListener;
@@ -47,7 +44,7 @@ public class CoreWorker {
         mDisplayManager.createVirtualDisplay("OpenCV Virtual Display", 960, 1280, 150, encoderInputSurface,
                 DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC | DisplayManager.VIRTUAL_DISPLAY_FLAG_SECURE);
 
-        Thread encoderThread = new Thread(new EncoderWorker());
+        Thread encoderThread = new Thread(new CodecWorker());
         encoderThread.start();
     }
 
@@ -86,7 +83,7 @@ public class CoreWorker {
                 mMediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
                 mMediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 10);
                 Log.i(TAG, "Starting encoder");
-                encoder = MediaCodec.createByCodecName(Utils.selectCodec("video/avc").getName());
+                encoder = MediaCodec.createByCodecName(CodecUtils.selectCodec(CodecUtils.MIME_TYPE).getName());
                 encoder.configure(mMediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
                 Surface surface = encoder.createInputSurface();
 
@@ -99,14 +96,14 @@ public class CoreWorker {
         return null;
     }
 
-    private class EncoderWorker implements Runnable {
+    private class CodecWorker implements Runnable {
 
         @Override
         public void run() {
             DisplayFrame displayFrame = new DisplayFrame(1024, 1280);
-            decoder = MediaCodec.createDecoderByType(Utils.MIME_TYPE);
+            decoder = MediaCodec.createDecoderByType(CodecUtils.MIME_TYPE);
             mListener.onDisplayFrameStarted();
-            Utils.doEncodeDecodeVideoFromSurface(encoder, decoder, mListener, displayFrame);
+            CodecUtils.doEncodeDecodeVideoFromSurface(encoder, decoder, mListener, displayFrame);
             mListener.onDisplayFrameStopped();
         }
     }

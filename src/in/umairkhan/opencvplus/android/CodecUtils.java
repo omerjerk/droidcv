@@ -14,11 +14,10 @@ import java.nio.ByteOrder;
 /**
  * Created by omerjerk on 12/7/14.
  */
-public class Utils {
+public class CodecUtils {
     private static boolean VERBOSE = true;
     private static final String TAG = "Codec";
     public static String MIME_TYPE = "video/avc";
-
 
     public static int FRAME_RATE = 15;
 

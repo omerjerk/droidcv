@@ -6,7 +6,6 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.WindowManager;
 import org.opencv.core.Scalar;
 
@@ -23,7 +22,7 @@ public class SampleActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         setContentView(R.layout.face_detect_surface_view);
-        startService(new Intent(this, CoreService.class));
+        startService(new Intent(this, CoreDisplayService.class));
         startService(new Intent(this, ResultDisplayService.class));
     }
 
@@ -37,7 +36,7 @@ public class SampleActivity extends Activity {
     }
 
     public void stopService (View v) {
-        stopService(new Intent(this, CoreService.class));
+        stopService(new Intent(this, CoreDisplayService.class));
     }
 
     public void onNewFrame(CvCameraViewFrame input){

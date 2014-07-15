@@ -57,7 +57,7 @@ public class ResultDisplayService extends Service {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            detectionCountTextView.setText("FACES = " + CoreService.FACES_COUNT);
+            detectionCountTextView.setText("FACES = " + CoreDisplayService.FACES_COUNT);
         }
     }
 

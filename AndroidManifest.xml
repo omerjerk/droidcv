@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".CoreService" android:exported="true" />
+        <service android:name=".CoreDisplayService" android:exported="true" />
         <service android:name=".ResultDisplayService" android:exported="true" />
     </application>
 
