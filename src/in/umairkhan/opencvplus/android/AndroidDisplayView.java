@@ -148,7 +148,9 @@ public class AndroidDisplayView extends SurfaceView implements SurfaceHolder.Cal
         public void run() {
             DisplayFrame displayFrame = new DisplayFrame(1024, 1280);
             decoder = MediaCodec.createDecoderByType(Utils.MIME_TYPE);
+            mListener.onDisplayFrameStarted();
             Utils.doEncodeDecodeVideoFromSurface(encoder, decoder, mListener, displayFrame);
+            mListener.onDisplayFrameStopped();
         }
     }
 
