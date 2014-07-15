@@ -4,14 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <in.umairkhan.opencvplus.android.AndroidDisplayView
-            android:id="@+id/display_view"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"/>
-
     <ImageView
             android:id="@+id/image_view"
-            android:layout_below="@id/display_view"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:src="@drawable/shahrukh_khan"

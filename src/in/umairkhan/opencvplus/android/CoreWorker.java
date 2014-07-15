@@ -24,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Created by omerjerk on 12/7/14.
  */
-public class AndroidDisplayView extends SurfaceView implements SurfaceHolder.Callback{
+public class CoreWorker {
 
     private static final String TAG = "AndroidDisplayView";
     private static final boolean DEBUG = true;
@@ -36,39 +36,14 @@ public class AndroidDisplayView extends SurfaceView implements SurfaceHolder.Cal
 
     DisplayFrameListener mListener = null;
 
-    SurfaceHolder mHolder = null;
-
-    public AndroidDisplayView(Context context) {
-        super(context);
+    public CoreWorker(Context context, DisplayFrameListener listener) {
         this.mContext = context;
-        mHolder = getHolder();
-        mHolder.addCallback(this);
-    }
-
-    public AndroidDisplayView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.mContext = context;
-        mHolder = getHolder();
-        mHolder.addCallback(this);
-    }
-
-    public AndroidDisplayView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        this.mContext = context;
-        mHolder = getHolder();
-        mHolder.addCallback(this);
-    }
-
-    public void setDisplayFrameListener(DisplayFrameListener l) {
-        mListener = l;
+        this.mListener = listener;
     }
 
     public void startRendering() {
         DisplayManager mDisplayManager = (DisplayManager) mContext.getSystemService(Context.DISPLAY_SERVICE);
-        if (DEBUG) Log.d(TAG, "Width = " + getWidth());
-        if (DEBUG) Log.d(TAG, "Height = " + getHeight());
-        Surface outputSurface = getHolder().getSurface();
-        Surface encoderInputSurface = createDisplaySurface(outputSurface);
+        Surface encoderInputSurface = createDisplaySurface();
         mDisplayManager.createVirtualDisplay("OpenCV Virtual Display", 960, 1280, 150, encoderInputSurface,
                 DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC | DisplayManager.VIRTUAL_DISPLAY_FLAG_SECURE);
 
@@ -76,7 +51,7 @@ public class AndroidDisplayView extends SurfaceView implements SurfaceHolder.Cal
         encoderThread.start();
     }
 
-    private Surface createDisplaySurface(Surface outputSurface) {
+    private Surface createDisplaySurface() {
         int bitrate;
         int maxFrameRate;
         int height = 1280;
@@ -122,24 +97,6 @@ public class AndroidDisplayView extends SurfaceView implements SurfaceHolder.Cal
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder) {
-
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3) {
-      /*  DisplayManager mDisplayManager = (DisplayManager) mContext.getSystemService(Context.DISPLAY_SERVICE);
-        mDisplayManager.createVirtualDisplay("OpenCV Render Display", 960, 1280, 150, surfaceHolder.getSurface(),
-                DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC | DisplayManager.VIRTUAL_DISPLAY_FLAG_SECURE); */
-        //startRendering();
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
     }
 
     private class EncoderWorker implements Runnable {

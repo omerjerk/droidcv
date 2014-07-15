@@ -40,7 +40,7 @@ public class ResultDisplayService extends Service {
         LayoutInflater li = LayoutInflater.from(this);
         resultOverlayLayout = (RelativeLayout) li.inflate(R.layout.result_layout, null, false);
         detectionCountTextView = (TextView) resultOverlayLayout.findViewById(R.id.result_text_view);
-        detectionCountTextView.setText("0");
+        detectionCountTextView.setText("FACES = 0");
         WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -56,7 +56,7 @@ public class ResultDisplayService extends Service {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            detectionCountTextView.setText("FACES = " + FdActivity.FACES_COUNT);
+            detectionCountTextView.setText("FACES = " + CoreService.FACES_COUNT);
         }
     }
 
