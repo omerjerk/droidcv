@@ -13,7 +13,6 @@ public class DisplayFrame implements CameraBridgeViewBase.CvCameraViewFrame {
     private Mat frame;
     private int height;
     private int width;
-    public byte[] buffer;
 
     public DisplayFrame(int width, int height) {
         frame = new Mat(height, 1024, CvType.CV_8UC1);
@@ -23,18 +22,16 @@ public class DisplayFrame implements CameraBridgeViewBase.CvCameraViewFrame {
 
     public void updateFrame(byte[] frameBuffer) {
         frame.put(0, 0, frameBuffer);
-        buffer = frameBuffer;
     }
 
     @Override
     public Mat rgba() {
+        //TODO: As of now I'm not able to create rgba frame
         return frame;
     }
 
     @Override
     public Mat gray() {
-        Mat grayFrame = new Mat(height, width, CvType.CV_8UC1);
-        Imgproc.cvtColor(frame, grayFrame, Imgproc.COLOR_RGB2GRAY);
-        return grayFrame;
+        return frame;
     }
 }

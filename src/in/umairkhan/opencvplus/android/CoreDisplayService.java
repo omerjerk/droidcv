@@ -3,14 +3,13 @@ package in.umairkhan.opencvplus.android;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaFormat;
 import android.os.IBinder;
 import android.util.Log;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
 
@@ -22,17 +21,18 @@ import java.io.InputStream;
 /**
  * Created by omerjerk on 15/7/14.
  */
-public class CoreDisplayService extends Service implements DisplayFrameListener {
+public abstract class CoreDisplayService extends Service implements DisplayFrameListener {
 
     private static final String TAG = "AndroidDisplayView";
     private static final boolean DEBUG = true;
 
     CoreWorker coreWorker;
 
-    private File mCascadeFile;
     private DetectionBasedTracker mNativeDetector;
 
     public static int FACES_COUNT = 0;
+
+    public abstract int setClassifier();
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -46,9 +46,9 @@ public class CoreDisplayService extends Service implements DisplayFrameListener 
 
                     try {
                         // load cascade file from application resources
-                        InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
+                        InputStream is = getResources().openRawResource(setClassifier());
                         File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
-                        mCascadeFile = new File(cascadeDir, "cascade.xml");
+                        File mCascadeFile = new File(cascadeDir, "cascade.xml");
                         FileOutputStream os = new FileOutputStream(mCascadeFile);
 
                         byte[] buffer = new byte[4096];
@@ -94,10 +94,12 @@ public class CoreDisplayService extends Service implements DisplayFrameListener 
 
     @Override
     public void rawFrame(final byte[] frame) {
-        Mat mat = new Mat(1280, 1024, CvType.CV_8UC1);
-        mat.put(0, 0, frame);
+    }
+
+    @Override
+    public void onNewFrame(CameraBridgeViewBase.CvCameraViewFrame frame) {
         MatOfRect faces = new MatOfRect();
-        mNativeDetector.detect(mat, faces);
+        mNativeDetector.detect(frame.gray(), faces);
         Rect[] facesArray = faces.toArray();
         Log.d("omerjerk", "Number of faces = " + facesArray.length);
         FACES_COUNT = facesArray.length;
@@ -106,18 +108,15 @@ public class CoreDisplayService extends Service implements DisplayFrameListener 
     }
 
     @Override
-    public void onNewFrame(CameraBridgeViewBase.CvCameraViewFrame frame) {
-
-    }
-
-    @Override
     public void onDisplayFrameStarted() {
-
     }
 
     @Override
     public void onDisplayFrameStopped() {
+    }
 
+    @Override
+    public void decoderOutputFormatChanged(MediaFormat format) {
     }
 
     @Override

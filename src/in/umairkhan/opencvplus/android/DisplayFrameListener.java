@@ -1,5 +1,6 @@
 package in.umairkhan.opencvplus.android;
 
+import android.media.MediaFormat;
 import org.opencv.android.CameraBridgeViewBase;
 
 /**
@@ -10,4 +11,5 @@ public interface DisplayFrameListener {
     public void onDisplayFrameStarted();
     public void onDisplayFrameStopped();
     public void rawFrame(byte[] frame);
+    public void decoderOutputFormatChanged(MediaFormat format);
 }

@@ -141,6 +141,7 @@ public class CodecUtils {
                                 MediaFormat.createVideoFormat(MIME_TYPE, mWidth, mHeight);
                         format.setByteBuffer("csd-0", encodedData);
                         decoder.configure(format, null, null, 0);
+                        mListener.decoderOutputFormatChanged(format);
                         decoder.start();
                         decoderInputBuffers = decoder.getInputBuffers();
                         decoderOutputBuffers = decoder.getOutputBuffers();

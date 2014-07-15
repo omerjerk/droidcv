@@ -22,7 +22,7 @@ public class SampleActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         setContentView(R.layout.face_detect_surface_view);
-        startService(new Intent(this, CoreDisplayService.class));
+        startService(new Intent(this, SampleService.class));
         startService(new Intent(this, ResultDisplayService.class));
     }
 
@@ -36,7 +36,7 @@ public class SampleActivity extends Activity {
     }
 
     public void stopService (View v) {
-        stopService(new Intent(this, CoreDisplayService.class));
+        stopService(new Intent(this, SampleService.class));
     }
 
     public void onNewFrame(CvCameraViewFrame input){
