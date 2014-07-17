@@ -5,6 +5,7 @@ import android.hardware.display.DisplayManager;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
@@ -38,11 +39,23 @@ public class CoreWorker {
         this.mListener = listener;
     }
 
-    public void startRendering() {
-        DisplayManager mDisplayManager = (DisplayManager) mContext.getSystemService(Context.DISPLAY_SERVICE);
-        Surface encoderInputSurface = createDisplaySurface();
-        mDisplayManager.createVirtualDisplay("OpenCV Virtual Display", 960, 1280, 150, encoderInputSurface,
-                DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC | DisplayManager.VIRTUAL_DISPLAY_FLAG_SECURE);
+    public void startRendering(int mode, Uri videoSource) throws IllegalArgumentException{
+        switch (mode) {
+            case CoreDisplayService.MODE_DISPLAY_SCREEN:
+                DisplayManager mDisplayManager = (DisplayManager) mContext.getSystemService(Context.DISPLAY_SERVICE);
+                Surface encoderInputSurface = createDisplaySurface();
+                mDisplayManager.createVirtualDisplay("OpenCV Virtual Display", 960, 1280, 150, encoderInputSurface,
+                        DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC | DisplayManager.VIRTUAL_DISPLAY_FLAG_SECURE);
+                break;
+            case CoreDisplayService.MODE_VIDEO:
+                if (videoSource == null) {
+                    throw new IllegalArgumentException("You must override the setVideoSource method in your service.");
+                }
+                //TODO: write the rest of the code.
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
 
         Thread encoderThread = new Thread(new CodecWorker());
         encoderThread.start();

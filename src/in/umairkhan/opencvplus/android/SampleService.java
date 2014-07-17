@@ -14,6 +14,11 @@ public class SampleService extends CoreDisplayService {
     }
 
     @Override
+    public int setMode() {
+        return CoreDisplayService.MODE_DISPLAY_SCREEN;
+    }
+
+    @Override
     public void onNewFrame(CameraBridgeViewBase.CvCameraViewFrame frame) {
         //Call the super method only for debugging purposes
         super.onNewFrame(frame);

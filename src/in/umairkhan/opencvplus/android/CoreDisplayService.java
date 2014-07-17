@@ -4,8 +4,10 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaFormat;
+import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Surface;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.LoaderCallbackInterface;
@@ -29,6 +31,8 @@ public abstract class CoreDisplayService extends Service implements DisplayFrame
     private static final String TAG = "AndroidDisplayView";
     private static final boolean DEBUG = true;
 
+    private int mode;
+
     CoreWorker coreWorker;
 
     private DetectionBasedTracker mNativeDetector;
@@ -36,6 +40,7 @@ public abstract class CoreDisplayService extends Service implements DisplayFrame
     public static int FACES_COUNT = 0;
 
     public abstract int setClassifier();
+    public abstract int setMode();
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -66,7 +71,7 @@ public abstract class CoreDisplayService extends Service implements DisplayFrame
                         mNativeDetector.start();
                         cascadeDir.delete();
 
-                        coreWorker.startRendering();
+                        coreWorker.startRendering(mode, setVideoSource());
                     } catch (IOException e) {
                         e.printStackTrace();
                         Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
@@ -81,6 +86,8 @@ public abstract class CoreDisplayService extends Service implements DisplayFrame
         }
     };
 
+    public Uri setVideoSource() {return null;}
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -88,6 +95,7 @@ public abstract class CoreDisplayService extends Service implements DisplayFrame
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        mode = setMode();
         coreWorker = new CoreWorker(this, this);
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback);
         // We want this service to continue running until it is explicitly

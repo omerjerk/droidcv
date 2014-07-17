@@ -1,6 +1,7 @@
 package in.umairkhan.opencvplus.android;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ public class SampleVideoActivity extends Activity implements SurfaceHolder.Callb
 
     MediaPlayer mediaPlayer;
     SurfaceView surfaceView;
-    SurfaceHolder surfaceHolder;
+    static SurfaceHolder surfaceHolder = null;
 
     @Override
     public void onCreate (Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class SampleVideoActivity extends Activity implements SurfaceHolder.Callb
         surfaceHolder.addCallback(this);
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setLooping(true);
+        stopService(new Intent(this, SampleService.class));
     }
 
     @Override
@@ -42,6 +44,7 @@ public class SampleVideoActivity extends Activity implements SurfaceHolder.Callb
         try {
             mediaPlayer.setDataSource(this, Uri.parse(src_file));
             mediaPlayer.prepare();
+            startService(new Intent(this, SampleService.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
