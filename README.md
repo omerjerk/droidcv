@@ -1,4 +1,4 @@
-OpenCv Plus - Android
+Droidcv - Libraries built on top of Opencv4Android
 ===================
 
 * ### Route the display of an Android device to OpenCv and do all the image processing operations as you would do with a normal `Mat` object. ###
