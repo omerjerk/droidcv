@@ -23,6 +23,9 @@ import java.io.InputStream;
  */
 public abstract class CoreDisplayService extends Service implements DisplayFrameListener {
 
+    public static final int MODE_DISPLAY_SCREEN = 1;
+    public static final int MODE_VIDEO = 2;
+
     private static final String TAG = "AndroidDisplayView";
     private static final boolean DEBUG = true;
 
