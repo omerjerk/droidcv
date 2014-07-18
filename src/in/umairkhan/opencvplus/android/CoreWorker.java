@@ -40,25 +40,29 @@ public class CoreWorker {
     }
 
     public void startRendering(int mode, Uri videoSource) throws IllegalArgumentException{
+        CodecWorker mWorker = null;
         switch (mode) {
             case CoreDisplayService.MODE_DISPLAY_SCREEN:
                 DisplayManager mDisplayManager = (DisplayManager) mContext.getSystemService(Context.DISPLAY_SERVICE);
                 Surface encoderInputSurface = createDisplaySurface();
                 mDisplayManager.createVirtualDisplay("OpenCV Virtual Display", 960, 1280, 150, encoderInputSurface,
                         DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC | DisplayManager.VIRTUAL_DISPLAY_FLAG_SECURE);
+                mWorker = new CodecWorker(true);
                 break;
             case CoreDisplayService.MODE_VIDEO:
                 if (videoSource == null) {
                     throw new IllegalArgumentException("You must override the setVideoSource method in your service.");
                 }
+                mWorker = new CodecWorker(false, videoSource);
                 //TODO: write the rest of the code.
                 break;
             default:
                 throw new UnsupportedOperationException();
         }
-
-        Thread encoderThread = new Thread(new CodecWorker());
-        encoderThread.start();
+        if (mWorker != null) {
+            Thread encoderThread = new Thread(mWorker);
+            encoderThread.start();
+        }
     }
 
     private Surface createDisplaySurface() {
@@ -111,12 +115,28 @@ public class CoreWorker {
 
     private class CodecWorker implements Runnable {
 
+        private boolean isFromSurface = false;
+        private Uri videoSource = null;
+
+        public CodecWorker(boolean isFromSurface) {
+            this(isFromSurface, null);
+        }
+
+        public CodecWorker(boolean isFromSurface, Uri videoSource) {
+            this.isFromSurface = isFromSurface;
+            this.videoSource = videoSource;
+        }
+
         @Override
         public void run() {
             DisplayFrame displayFrame = new DisplayFrame(1024, 1280);
-            decoder = MediaCodec.createDecoderByType(CodecUtils.MIME_TYPE);
             mListener.onDisplayFrameStarted();
-            CodecUtils.doEncodeDecodeVideoFromSurface(encoder, decoder, mListener, displayFrame);
+            if (isFromSurface) {
+                decoder = MediaCodec.createDecoderByType(CodecUtils.MIME_TYPE);
+                CodecUtils.doEncodeDecodeVideoFromSurface(encoder, decoder, mListener, displayFrame);
+            } else {
+                CodecUtils.doDecodeFromVideo(videoSource, mListener, displayFrame);
+            }
             mListener.onDisplayFrameStopped();
         }
     }

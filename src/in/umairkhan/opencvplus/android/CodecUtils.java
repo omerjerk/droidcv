@@ -1,13 +1,12 @@
 package in.umairkhan.opencvplus.android;
 
-import android.media.MediaCodec;
-import android.media.MediaCodecInfo;
-import android.media.MediaCodecList;
-import android.media.MediaFormat;
+import android.media.*;
+import android.net.Uri;
 import android.util.Log;
 import in.umairkhan.opencvplus.android.DisplayFrame;
 import in.umairkhan.opencvplus.android.DisplayFrameListener;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -216,43 +215,86 @@ public class CodecUtils {
                 + mWidth + "x" + mHeight + ": raw=" + rawSize + ", enc=" + encodedSize);
     }
 
-    public static void decodeYUV420SP(byte[] yuv420sp, int width, int height, int[] rgb) {
+    public static void doDecodeFromVideo (Uri filePath, DisplayFrameListener frameListener,
+                                          DisplayFrame displayFrame) throws IOException{
+        MediaCodec decoder;
+        MediaExtractor extractor = new MediaExtractor();
+        extractor.setDataSource(filePath.getPath());
+        MediaFormat format = extractor.getTrackFormat(0);
+        String mime = format.getString(MediaFormat.KEY_MIME);
+        decoder = MediaCodec.createDecoderByType(mime);
+        decoder.configure(format, null /* surface */, null /* crypto */, 0 /* flags */);
+        decoder.start();
+        ByteBuffer[] codecInputBuffers = decoder.getInputBuffers();
+        ByteBuffer[] codecOutputBuffers = decoder.getOutputBuffers();
+        extractor.selectTrack(0);
+        final long kTimeOutUs = 10000;
+        MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();
+        boolean sawInputEOS = false;
+        boolean sawOutputEOS = false;
 
-        final int frameSize = width * height;
+        int inputBufIndex;
 
-        for (int j = 0, yp = 0; j < height; j++) {
-            int uvp = frameSize + (j >> 1) * width, u = 0, v = 0;
-            for (int i = 0; i < width; i++, yp++) {
-                int y = (0xff & ((int) yuv420sp[yp])) - 16;
-                if (y < 0)
-                    y = 0;
-                if ((i & 1) == 0) {
-                    v = (0xff & yuv420sp[uvp++]) - 128;
-                    u = (0xff & yuv420sp[uvp++]) - 128;
+        int counter=0;
+        while (!sawOutputEOS) {
+            counter++;
+            if (!sawInputEOS) {
+                inputBufIndex = decoder.dequeueInputBuffer(kTimeOutUs);
+                // Log.d(LOG_TAG, " bufIndexCheck " + bufIndexCheck);
+                if (inputBufIndex >= 0) {
+                    ByteBuffer dstBuf = codecInputBuffers[inputBufIndex];
+
+                    int sampleSize = extractor
+                            .readSampleData(dstBuf, 0 /* offset */);
+
+                    long presentationTimeUs = 0;
+
+                    if (sampleSize < 0) {
+
+                        sawInputEOS = true;
+                        sampleSize = 0;
+                    } else {
+
+                        presentationTimeUs = extractor.getSampleTime();
+                    }
+                    // can throw illegal state exception (???)
+
+                    decoder.queueInputBuffer(inputBufIndex, 0 /* offset */,
+                            sampleSize, presentationTimeUs,
+                            sawInputEOS ? MediaCodec.BUFFER_FLAG_END_OF_STREAM
+                                    : 0);
+
+                    if (!sawInputEOS) {
+                        extractor.advance();
+                    }
+                } else {
+                    Log.e("omerjerk", "inputBufIndex " + inputBufIndex);
                 }
+            }
 
-                int y1192 = 1192 * y;
-                int r = (y1192 + 1634 * v);
-                int g = (y1192 - 833 * v - 400 * u);
-                int b = (y1192 + 2066 * u);
+            int outputBufIndex = decoder.dequeueOutputBuffer(bufferInfo, kTimeOutUs);
 
-                if (r < 0)
-                    r = 0;
-                else if (r > 262143)
-                    r = 262143;
-                if (g < 0)
-                    g = 0;
-                else if (g > 262143)
-                    g = 262143;
-                if (b < 0)
-                    b = 0;
-                else if (b > 262143)
-                    b = 262143;
+            if (outputBufIndex >= 0) {
 
-                rgb[yp] = 0xff000000 | ((r << 6) & 0xff0000)
-                        | ((g >> 2) & 0xff00) | ((b >> 10) & 0xff);
+                ByteBuffer buf = codecOutputBuffers[outputBufIndex];
 
+                final byte[] chunk = new byte[bufferInfo.size];
+                buf.get(chunk, 0 , bufferInfo.size);
+                buf.clear();
+                //TODO: Pass these frames to OpenCv
+                decoder.releaseOutputBuffer(outputBufIndex, false /* render */);
+                if ((bufferInfo.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
+                    sawOutputEOS = true;
+                }
+            } else if (outputBufIndex == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
+                codecOutputBuffers = decoder.getOutputBuffers();
+            } else if (outputBufIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
+                MediaFormat outputFormat = decoder.getOutputFormat();
+                Log.i("omerjerk", "output format has changed to " + outputFormat);
+            } else {
+                Log.i("omerjerk", "dequeueOutputBuffer returned " + outputBufIndex);
             }
         }
+
     }
 }

@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public class SampleVideoActivity extends Activity implements SurfaceHolder.Callback{
 
-    String src_file = "/sdcard/derp.mp4";
+    public static String src_file = "/sdcard/derp.mp4";
 
     MediaPlayer mediaPlayer;
     SurfaceView surfaceView;
@@ -35,7 +35,6 @@ public class SampleVideoActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-
     }
 
     @Override
@@ -53,7 +52,6 @@ public class SampleVideoActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
     }
 
     @Override
