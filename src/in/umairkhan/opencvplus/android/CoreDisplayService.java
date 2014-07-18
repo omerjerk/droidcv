@@ -112,8 +112,8 @@ public abstract class CoreDisplayService extends Service implements DisplayFrame
         MatOfRect faces = new MatOfRect();
         mNativeDetector.detect(frame.gray(), faces);
         Rect[] facesArray = faces.toArray();
-        Log.d("omerjerk", "Number of faces = " + facesArray.length);
         FACES_COUNT = facesArray.length;
+        Log.d("omerjerk", "Faces count = " + FACES_COUNT);
         Intent intent = new Intent("UPDATE");
         sendBroadcast(intent);
     }

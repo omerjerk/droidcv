@@ -1,6 +1,7 @@
 package in.umairkhan.opencvplus.android;
 
 import android.net.Uri;
+import org.opencv.android.CameraBridgeViewBase;
 
 /**
  * Created by omerjerk on 17/7/14.
@@ -20,5 +21,10 @@ public class SampleVideoService extends CoreDisplayService {
     @Override
     public Uri setVideoSource() {
         return Uri.parse("/sdcard/derp.mp4");
+    }
+
+    @Override
+    public void onNewFrame(CameraBridgeViewBase.CvCameraViewFrame frame) {
+        super.onNewFrame(frame);
     }
 }

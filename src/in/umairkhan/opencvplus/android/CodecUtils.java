@@ -219,10 +219,12 @@ public class CodecUtils {
                                           DisplayFrame displayFrame) throws IOException{
         MediaCodec decoder;
         MediaExtractor extractor = new MediaExtractor();
+        Log.d("omerjerk", "File Path = " + filePath.getPath());
         extractor.setDataSource(filePath.getPath());
         MediaFormat format = extractor.getTrackFormat(0);
         String mime = format.getString(MediaFormat.KEY_MIME);
         decoder = MediaCodec.createDecoderByType(mime);
+        Log.d("omerjerk", "Mime = " + mime);
         decoder.configure(format, null /* surface */, null /* crypto */, 0 /* flags */);
         decoder.start();
         ByteBuffer[] codecInputBuffers = decoder.getInputBuffers();
@@ -235,9 +237,7 @@ public class CodecUtils {
 
         int inputBufIndex;
 
-        int counter=0;
         while (!sawOutputEOS) {
-            counter++;
             if (!sawInputEOS) {
                 inputBufIndex = decoder.dequeueInputBuffer(kTimeOutUs);
                 // Log.d(LOG_TAG, " bufIndexCheck " + bufIndexCheck);
@@ -276,13 +276,21 @@ public class CodecUtils {
 
             if (outputBufIndex >= 0) {
 
-                ByteBuffer buf = codecOutputBuffers[outputBufIndex];
+                if (bufferInfo.size != 0) {
+                    ByteBuffer buf = codecOutputBuffers[outputBufIndex];
 
-                final byte[] chunk = new byte[bufferInfo.size];
-                buf.get(chunk, 0 , bufferInfo.size);
-                buf.clear();
-                //TODO: Pass these frames to OpenCv
-                decoder.releaseOutputBuffer(outputBufIndex, false /* render */);
+                    buf.position(bufferInfo.offset);
+                    buf.limit(bufferInfo.offset + bufferInfo.size);
+                    final byte[] frame = new byte[bufferInfo.size];
+                    buf.get(frame, bufferInfo.offset , bufferInfo.size);
+                    buf.clear();
+                    displayFrame.updateFrame(frame);
+                    frameListener.onNewFrame(displayFrame);
+                    decoder.releaseOutputBuffer(outputBufIndex, false /* render */);
+                } else {
+                    if (VERBOSE) Log.d("omerjerk", "Got empty frame");
+                }
+
                 if ((bufferInfo.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
                     sawOutputEOS = true;
                 }
@@ -291,8 +299,8 @@ public class CodecUtils {
             } else if (outputBufIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
                 MediaFormat outputFormat = decoder.getOutputFormat();
                 Log.i("omerjerk", "output format has changed to " + outputFormat);
-            } else {
-                Log.i("omerjerk", "dequeueOutputBuffer returned " + outputBufIndex);
+            } else if (outputBufIndex == MediaCodec.INFO_TRY_AGAIN_LATER){
+                Log.i("omerjerk", "No output from the decoder");
             }
         }
 

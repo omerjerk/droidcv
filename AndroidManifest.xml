@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <service android:name=".SampleService" android:exported="true" />
+        <service android:name=".SampleVideoService" android:exported="true" />
         <service android:name=".ResultDisplayService" android:exported="true" />
     </application>
 

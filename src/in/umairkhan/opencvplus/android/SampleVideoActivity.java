@@ -17,20 +17,23 @@ public class SampleVideoActivity extends Activity implements SurfaceHolder.Callb
 
     public static String src_file = "/sdcard/derp.mp4";
 
-    MediaPlayer mediaPlayer;
-    SurfaceView surfaceView;
-    static SurfaceHolder surfaceHolder = null;
+    //MediaPlayer mediaPlayer;
+    //SurfaceView surfaceView;
+    //static SurfaceHolder surfaceHolder = null;
 
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_video_activity);
-        surfaceView = (SurfaceView) findViewById(R.id.video_surface_view);
-        surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(this);
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setLooping(true);
+        //surfaceView = (SurfaceView) findViewById(R.id.video_surface_view);
+        //surfaceHolder = surfaceView.getHolder();
+        //surfaceHolder.addCallback(this);
+        //mediaPlayer = new MediaPlayer();
+        //mediaPlayer.setLooping(true);
         stopService(new Intent(this, SampleService.class));
+        stopService(new Intent(this, SampleVideoService.class));
+        startService(new Intent(this, SampleVideoService.class));
+        startService(new Intent(this, ResultDisplayService.class));
     }
 
     @Override
@@ -39,15 +42,15 @@ public class SampleVideoActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3) {
-        mediaPlayer.setDisplay(surfaceHolder);
+        //mediaPlayer.setDisplay(surfaceHolder);
         try {
-            mediaPlayer.setDataSource(this, Uri.parse(src_file));
-            mediaPlayer.prepare();
-            startService(new Intent(this, SampleService.class));
-        } catch (IOException e) {
+            //mediaPlayer.setDataSource(this, Uri.parse(src_file));
+            //mediaPlayer.prepare();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        mediaPlayer.start();
+        //mediaPlayer.start();
     }
 
     @Override
@@ -57,6 +60,6 @@ public class SampleVideoActivity extends Activity implements SurfaceHolder.Callb
     @Override
     public void onPause() {
         super.onPause();
-        mediaPlayer.stop();
+        //mediaPlayer.stop();
     }
 }

@@ -15,6 +15,7 @@ import safesax.ElementListener;
 import safesax.Parsers;
 import safesax.RootElement;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -135,7 +136,11 @@ public class CoreWorker {
                 decoder = MediaCodec.createDecoderByType(CodecUtils.MIME_TYPE);
                 CodecUtils.doEncodeDecodeVideoFromSurface(encoder, decoder, mListener, displayFrame);
             } else {
-                CodecUtils.doDecodeFromVideo(videoSource, mListener, displayFrame);
+                try {
+                    CodecUtils.doDecodeFromVideo(videoSource, mListener, displayFrame);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             mListener.onDisplayFrameStopped();
         }
