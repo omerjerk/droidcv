@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="unspecified" >
+        <source path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/build/intermediates/exploded-aar/face-detection/openCVLibrary249/unspecified/res" >
+            <file
+                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/build/intermediates/exploded-aar/face-detection/openCVLibrary249/unspecified/res/values/values.xml"
+                qualifiers="" >
+                <declare-styleable name="CameraBridgeViewBase" >
+                    <attr
+                        name="show_fps"
+                        format="boolean" />
+                    <attr
+                        name="camera_id"
+                        format="integer" >
+                        <enum
+                            name="any"
+                            value="-1" />
+                        <enum
+                            name="back"
+                            value="99" />
+                        <enum
+                            name="front"
+                            value="98" />
+                    </attr>
+                </declare-styleable>
+            </file>
+        </source>
+    </dataSet>
+    <dataSet config="main" >
+        <source path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res" >
+            <file
+                name="icon"
+                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/drawable/icon.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="shahrukh_khan"
+                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/drawable/shahrukh_khan.jpg"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="lbpcascade_frontalface"
+                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/raw/lbpcascade_frontalface.xml"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="banana_classifier"
+                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/raw/banana_classifier.xml"
+                qualifiers=""
+                type="raw" />
+            <file
+                name="cascade"
+                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/raw/cascade.xml"
+                qualifiers=""
+                type="raw" />
+            <file
+                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/values/strings.xml"
+                qualifiers="" >
+                <string name="app_name" >OpenCv Plus Android
+                </string>
+            </file>
+            <file
+                name="result_layout"
+                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/layout/result_layout.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="layout_video_activity"
+                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/layout/layout_video_activity.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="face_detect_surface_view"
+                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/layout/face_detect_surface_view.xml"
+                qualifiers=""
+                type="layout" />
+        </source>
+        <source path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/build/generated/res/rs/release" />
+        <source path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/build/generated/res/generated/release" />
+    </dataSet>
+    <dataSet config="release" >
+        <source path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/release/res" />
+    </dataSet>
+
+</merger>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="unspecified" >
+        <source path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/build/intermediates/exploded-aar/face-detection/openCVLibrary249/unspecified/assets" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/assets" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/debug/assets" />
+    </dataSet>
+
+</merger>

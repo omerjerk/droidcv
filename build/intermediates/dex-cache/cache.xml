@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/build/intermediates/pre-dexed/debug/classes-1258d5b8dae201bcb1c0b936f2e35fc308d4c80f.jar"
+        jar="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/build/intermediates/exploded-aar/face-detection/openCVLibrary249/unspecified/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="836069d70e40c7e55714e137be91c70eeca6030b"/>
+
+</pre-dex-items>

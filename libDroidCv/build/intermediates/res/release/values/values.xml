@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/build/intermediates/exploded-aar/face-detection/openCVLibrary249/unspecified/res/values/values.xml -->
+    <eat-comment />
+
+    <declare-styleable name="CameraBridgeViewBase">
+        <attr name="show_fps" format="boolean" />
+        <attr name="camera_id" format="integer">
+            <enum name="any" value="-1" />
+            <enum name="back" value="99" />
+            <enum name="front" value="98" />
+        </attr>
+    </declare-styleable>
+    <!-- From: file:/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <string name="app_name">OpenCv Plus Android</string>
+
+</resources>
