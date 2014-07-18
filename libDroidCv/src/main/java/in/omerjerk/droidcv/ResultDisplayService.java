@@ -13,6 +13,8 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import in.omerjerk.droidcv.R;
+
 /**
  * Created by omerjerk on 15/7/14.
  */
@@ -39,7 +41,7 @@ public class ResultDisplayService extends Service {
 
     private void createFaceCountFloatingWindow() {
         LayoutInflater li = LayoutInflater.from(this);
-        resultOverlayLayout = (RelativeLayout) li.inflate(R.layout.result_layout, null, false);
+        resultOverlayLayout = (RelativeLayout) li.inflate(R.layout.result_window_layout, null, false);
         detectionCountTextView = (TextView) resultOverlayLayout.findViewById(R.id.result_text_view);
         detectionCountTextView.setText("FACES = 0");
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);

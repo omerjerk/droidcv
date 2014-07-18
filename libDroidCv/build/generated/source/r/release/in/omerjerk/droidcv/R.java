@@ -26,7 +26,7 @@ containing a value of this type.
 <tr><td><code>front</code></td><td>98</td><td></td></tr>
 </table>
          */
-        public static final int camera_id=0x7f010001;
+        public static int camera_id=0x7f010001;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -34,32 +34,28 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int show_fps=0x7f010000;
+        public static int show_fps=0x7f010000;
     }
     public static final class drawable {
-        public static final int icon=0x7f020000;
-        public static final int shahrukh_khan=0x7f020001;
+        public static int icon=0x7f020000;
     }
     public static final class id {
-        public static final int any=0x7f050000;
-        public static final int back=0x7f050001;
-        public static final int front=0x7f050002;
-        public static final int image_view=0x7f050003;
-        public static final int result_text_view=0x7f050005;
-        public static final int video_surface_view=0x7f050004;
+        public static int any=0x7f050000;
+        public static int back=0x7f050001;
+        public static int front=0x7f050002;
+        public static int result_text_view=0x7f050003;
     }
     public static final class layout {
-        public static final int face_detect_surface_view=0x7f030000;
-        public static final int layout_video_activity=0x7f030001;
-        public static final int result_layout=0x7f030002;
+        public static int result_layout=0x7f030000;
+        public static int result_window_layout=0x7f030001;
     }
     public static final class raw {
-        public static final int banana_classifier=0x7f040000;
-        public static final int cascade=0x7f040001;
-        public static final int lbpcascade_frontalface=0x7f040002;
+        public static int banana_classifier=0x7f040000;
+        public static int cascade=0x7f040001;
+        public static int lbpcascade_frontalface=0x7f040002;
     }
     public static final class string {
-        public static final int app_name=0x7f060000;
+        public static int app_name=0x7f060000;
     }
     public static final class styleable {
         /** Attributes that can be used with a CameraBridgeViewBase.

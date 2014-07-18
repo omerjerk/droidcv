@@ -2,10 +2,16 @@
 <pre-dex-items>
 
     <item
-        dex="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/build/intermediates/pre-dexed/debug/classes-1258d5b8dae201bcb1c0b936f2e35fc308d4c80f.jar"
-        jar="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/build/intermediates/exploded-aar/face-detection/openCVLibrary249/unspecified/classes.jar"
+        dex="/home/omerjerk/AndroidstudioProjects/face-detection/samples/build/intermediates/pre-dexed/debug/classes-036a1c6802a7e0f2f316fc845fb8a5e3377555e6.jar"
+        jar="/home/omerjerk/AndroidstudioProjects/face-detection/samples/build/intermediates/exploded-aar/face-detection/libDroidCv/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="836069d70e40c7e55714e137be91c70eeca6030b"/>
+        sha1="b6875482858622d8169b7c6e03f4febe2b172111"/>
+    <item
+        dex="/home/omerjerk/AndroidstudioProjects/face-detection/samples/build/intermediates/pre-dexed/debug/classes-d762e651a1a60ac9d097c99b6e60d59b40b7a8c3.jar"
+        jar="/home/omerjerk/AndroidstudioProjects/face-detection/samples/build/intermediates/exploded-aar/face-detection/openCVLibrary249/unspecified/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="83de175312a2bc21b34de68c08a3821ce8afbc3e"/>
 
 </pre-dex-items>

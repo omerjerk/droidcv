@@ -35,11 +35,6 @@
                 qualifiers=""
                 type="drawable" />
             <file
-                name="shahrukh_khan"
-                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/drawable/shahrukh_khan.jpg"
-                qualifiers=""
-                type="drawable" />
-            <file
                 name="lbpcascade_frontalface"
                 path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/raw/lbpcascade_frontalface.xml"
                 qualifiers=""
@@ -63,16 +58,6 @@
             <file
                 name="result_layout"
                 path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/layout/result_layout.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="layout_video_activity"
-                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/layout/layout_video_activity.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="face_detect_surface_view"
-                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/layout/face_detect_surface_view.xml"
                 qualifiers=""
                 type="layout" />
         </source>

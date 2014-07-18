@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/libDroidCv" />
             <option value="$PROJECT_DIR$/openCVLibrary249" />
+            <option value="$PROJECT_DIR$/samples" />
           </set>
         </option>
       </GradleProjectSettings>
