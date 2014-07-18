@@ -24,7 +24,7 @@
         </activity>
         <service android:name=".SampleService" android:exported="true" />
         <service android:name=".SampleVideoService" android:exported="true" />
-        <service android:name="in.omerjerk.droidcv.ResultDisplayService" android:exported="true" />
+        <service android:name=".ResultDisplayService" android:exported="true" />
     </application>
 
     <supports-screens android:resizeable="true"

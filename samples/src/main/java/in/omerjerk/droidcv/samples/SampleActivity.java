@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import org.opencv.core.Scalar;
 
-import in.omerjerk.droidcv.ResultDisplayService;
-
 public class SampleActivity extends Activity {
 
     private static final String TAG = "SampleActivity";

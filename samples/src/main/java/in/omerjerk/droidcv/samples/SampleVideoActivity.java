@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 
-import in.omerjerk.droidcv.ResultDisplayService;
-
 /**
  * Created by omerjerk on 17/7/14.
  */

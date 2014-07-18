@@ -29,16 +29,6 @@
                 <string name="app_name" >OpenCv Plus Android
                 </string>
             </file>
-            <file
-                name="result_layout"
-                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/layout/result_layout.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="result_window_layout"
-                path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/src/main/res/layout/result_window_layout.xml"
-                qualifiers=""
-                type="layout" />
         </source>
         <source path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/build/generated/res/rs/release" />
         <source path="/home/omerjerk/AndroidstudioProjects/face-detection/libDroidCv/build/generated/res/generated/release" />

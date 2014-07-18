@@ -1,4 +1,4 @@
-package in.omerjerk.droidcv;
+package in.omerjerk.droidcv.samples;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -13,7 +13,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import in.omerjerk.droidcv.R;
+import in.omerjerk.droidcv.CoreDisplayService;
 
 /**
  * Created by omerjerk on 15/7/14.

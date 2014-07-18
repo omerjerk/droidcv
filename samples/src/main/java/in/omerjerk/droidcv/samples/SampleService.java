@@ -1,5 +1,6 @@
 package in.omerjerk.droidcv.samples;
 
+import android.content.Intent;
 import android.media.MediaFormat;
 import org.opencv.android.CameraBridgeViewBase;
 
@@ -45,5 +46,11 @@ public class SampleService extends CoreDisplayService {
     @Override
     public void decoderOutputFormatChanged(MediaFormat format) {
         //TODO: Override this to get info about the output format of the decoder
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(this, ResultDisplayService.class));
     }
 }

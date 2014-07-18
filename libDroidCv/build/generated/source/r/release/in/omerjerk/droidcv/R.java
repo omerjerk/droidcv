@@ -40,22 +40,17 @@ containing a value of this type.
         public static int icon=0x7f020000;
     }
     public static final class id {
-        public static int any=0x7f050000;
-        public static int back=0x7f050001;
-        public static int front=0x7f050002;
-        public static int result_text_view=0x7f050003;
-    }
-    public static final class layout {
-        public static int result_layout=0x7f030000;
-        public static int result_window_layout=0x7f030001;
+        public static int any=0x7f040000;
+        public static int back=0x7f040001;
+        public static int front=0x7f040002;
     }
     public static final class raw {
-        public static int banana_classifier=0x7f040000;
-        public static int cascade=0x7f040001;
-        public static int lbpcascade_frontalface=0x7f040002;
+        public static int banana_classifier=0x7f030000;
+        public static int cascade=0x7f030001;
+        public static int lbpcascade_frontalface=0x7f030002;
     }
     public static final class string {
-        public static int app_name=0x7f060000;
+        public static int app_name=0x7f050000;
     }
     public static final class styleable {
         /** Attributes that can be used with a CameraBridgeViewBase.

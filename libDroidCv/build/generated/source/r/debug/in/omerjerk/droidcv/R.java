@@ -45,9 +45,6 @@ containing a value of this type.
         public static int front=0x7f050002;
         public static int result_text_view=0x7f050003;
     }
-    public static final class layout {
-        public static int result_layout=0x7f030000;
-    }
     public static final class raw {
         public static int banana_classifier=0x7f040000;
         public static int cascade=0x7f040001;

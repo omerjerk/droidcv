@@ -6,6 +6,7 @@ int id back 0x7f050001
 int id front 0x7f050002
 int id result_text_view 0x7f050003
 int layout result_layout 0x7f030000
+int layout result_window_layout 0x7f030001
 int raw banana_classifier 0x7f040000
 int raw cascade 0x7f040001
 int raw lbpcascade_frontalface 0x7f040002

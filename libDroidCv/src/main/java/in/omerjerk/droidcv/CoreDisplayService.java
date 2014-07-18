@@ -7,7 +7,7 @@ import android.media.MediaFormat;
 import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.Surface;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.LoaderCallbackInterface;
@@ -128,11 +128,5 @@ public abstract class CoreDisplayService extends Service implements DisplayFrame
 
     @Override
     public void decoderOutputFormatChanged(MediaFormat format) {
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        stopService(new Intent(this, ResultDisplayService.class));
     }
 }
