@@ -9,6 +9,8 @@ Droidcv - Libraries built on top of Opencv4Android
   - The app must be pushed into /system/priv-app
   - The device must have Kitkat
 
+  **Demo :** https://www.youtube.com/watch?v=xKVsemXU8yk&feature=youtu.be
+
   **Usage :**
 
   Since while processing the display of your Android you will want your app to be run on the background, so we will be writing the core code inside a service.
